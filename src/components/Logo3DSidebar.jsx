@@ -30,10 +30,6 @@ const Logo3DSidebar = () => {
             <p className="text-xs font-semibold text-blue-600">BOREWELL</p>
           </div>
         </div>
-        <div className="text-center mt-2">
-          <p className="text-xs font-bold text-gray-800">AMIDHARA</p>
-          <p className="text-xs font-semibold text-blue-600">BOREWELL</p>
-        </div>
       </div>
     </div>
   )

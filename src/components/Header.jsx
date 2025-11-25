@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import logo from "/logo_tejas.png";
 
 const Header = ({ onNavigate, currentPage = 'home' }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -19,13 +20,24 @@ const Header = ({ onNavigate, currentPage = 'home' }) => {
     <header className="bg-white shadow-md fixed w-full top-0 z-50 water-surface">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
-            </div>
-            <span className="text-2xl font-bold text-gray-800">Amidhara Borewell</span>
-          </div>
           
+          {/* Logo (Even Smaller + Responsive) */}
+<div className="flex items-center space-x-2">
+  <img
+    src={logo}
+    alt="Logo"
+    className="
+      w-12    /* default */
+      sm:w-14 /* small screens */
+      md:w-18 /* medium screens */
+      lg:w-22 /* large screens */
+      h-auto
+      object-contain
+    "
+  />
+</div>
+
+
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             <button
@@ -59,6 +71,22 @@ const Header = ({ onNavigate, currentPage = 'home' }) => {
               }`}
             >
               About
+            </button>
+            <button
+              onClick={() => scrollToSection('product')}
+              className={`transition-colors ${
+                currentPage === 'product' ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
+              Product
+            </button>
+            <button
+              onClick={() => scrollToSection('faq')}
+              className={`transition-colors ${
+                currentPage === 'faq' ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'
+              }`}
+            >
+              FAQ
             </button>
             <button
               onClick={() => scrollToSection('contact')}
@@ -111,6 +139,18 @@ const Header = ({ onNavigate, currentPage = 'home' }) => {
               About
             </button>
             <button
+              onClick={() => scrollToSection('product')}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            >
+              Product
+            </button>
+            <button
+              onClick={() => scrollToSection('faq')}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            >
+              FAQ
+            </button>
+            <button
               onClick={() => scrollToSection('contact')}
               className="block w-full text-left px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
@@ -124,4 +164,3 @@ const Header = ({ onNavigate, currentPage = 'home' }) => {
 }
 
 export default Header
-

@@ -12,7 +12,7 @@ const Hero = () => {
 
   return (
     <section id="home" className="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-blue-100 relative overflow-hidden water-wave-bg water-surface min-h-screen">
-      <WaterEffects variant="waves" />
+      <WaterEffects variant='waves'/>
       <div className="water-bubbles">
         <div className="water-bubble"></div>
         <div className="water-bubble"></div>
@@ -33,11 +33,10 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center md:text-left">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 relative" style={{ zIndex: 20 }}>
-            Professional Borewell Services
+            Amidhara Borewell
           </h1>
           <p className="text-xl text-gray-700 mb-8 relative" style={{ zIndex: 20 }}>
-            Your trusted partner for reliable water solutions. We provide expert borewell drilling, 
-            installation, and maintenance services with years of experience.
+            We specialize in reliable borewell drilling, timely recharging, submersible pump installation, and comprehensive maintenance. We ensure accurate drilling and long-lasting water solutions with skilled experts and modern technology.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start relative" style={{ zIndex: 20 }}>
             <button

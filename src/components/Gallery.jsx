@@ -1,9 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react'
+import AOS from "aos";
+import "aos/dist/aos.css";
+import gallery1 from "/gallery1.jpg";
+import galleryvideo1 from "/galleryvideo1.mp4";
+import gallery2 from "/gallery2.jpg";
+import gallery3 from "/gallery3.jpg";
+import galleryvideo2 from "/galleryvideo2.mp4";
+import gallery4 from "/gallery4.jpg";
+import galleryvideo3 from "/galleryvideo3.mp4";
+import gallery5 from "/gallery5.jpg";
+import galleryvideo4 from "/galleryvideo4.mp4";
+import galleryvideoscreenshot1 from "/galleryvideoscreenshot1.png";
+import galleryvideoscreenshot2 from "/galleryvideoscreenshot2.png";
+import galleryvideoscreenshot3 from "/galleryvideoscreenshot3.png";
+import galleryvideoscreenshot4 from "/galleryvideoscreenshot4.png";
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { OrbitControls, Environment, PerspectiveCamera, Sphere, MeshDistortMaterial } from '@react-three/drei'
-import PhotoVideoGallery from './PhotoVideoGallery'
-import * as THREE from 'three'
+import WaterEffects from './WaterEffects';
+// import PhotoVideoGallery from './PhotoVideoGallery'
+// import * as THREE from 'three'
 
 // Simplified 3D elements for animation
 const AnimatedDroplet = ({ position, scale }) => {
@@ -141,6 +157,8 @@ const Animated3DScene = ({ onAnimationComplete }) => {
     }
   }, [onAnimationComplete])
 
+  
+
   return (
     <group ref={groupRef} position={position} scale={scale}>
       <AnimatedDroplet position={[-1.5, 1, 0]} scale={1} />
@@ -152,7 +170,106 @@ const Animated3DScene = ({ onAnimationComplete }) => {
   )
 }
 
+// pratixa's gallery
+
+const mediaData = [
+  {
+    id: 1,
+    type: "photo",
+    src: gallery1,
+    // title: "High-Depth Drilling",
+    // desc: "Industrial borewell execution at GIDC."
+  },
+  {
+    id: 2,
+    type: "video",
+    thumbnail: galleryvideoscreenshot1,
+    videoSrc: galleryvideo1, 
+    // title: "Live Drilling Process",
+    // desc: "Watch our advanced rig in action."
+  },
+  {
+    id: 3,
+    type: "photo",
+    src: gallery2,
+    // title: "Pump Installation",
+    // desc: "Installing heavy-duty submersible pumps."
+  },
+  {
+    id: 4,
+    type: "photo",
+    src: gallery3,
+    // title: "Water Recharge",
+    // desc: "Rainwater harvesting system setup."
+  },
+  {
+    id: 5,
+    type: "video",
+    thumbnail: galleryvideoscreenshot2,
+    videoSrc: galleryvideo2,
+    // title: "Machinery Setup",
+    // desc: "Deploying our compressor unit."
+  },
+  {
+    id: 6,
+    type: "photo",
+    src: gallery4,
+    // title: "Soil Testing",
+    // desc: "Analyzing ground layers for best water yield."
+  },
+  {
+    id: 7,
+    type: "video",
+    thumbnail: galleryvideoscreenshot3,
+    videoSrc: galleryvideo3,
+    // title: "Machinery Setup",
+    // desc: "Deploying our compressor unit."
+  },
+  {
+    id: 8,
+    type: "photo",
+    src: gallery5,
+    // title: "Soil Testing",
+    // desc: "Analyzing ground layers for best water yield."
+  },
+  {
+    id: 9,
+    type: "video",
+    thumbnail: galleryvideoscreenshot4,
+    videoSrc: galleryvideo4,
+    // title: "Machinery Setup",
+    // desc: "Deploying our compressor unit."
+  },
+
+];
+
 const Gallery = () => {
+  // from pratixa's gallery
+
+  const [filter, setFilter] = useState("all");
+  const [activeLightbox, setActiveLightbox] = useState(null);
+
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
+  // Filter logic
+  const filteredItems = mediaData.filter((item) => 
+    filter === "all" ? true : item.type === filter
+  );
+
+  // Open Lightbox
+  const openLightbox = (item) => {
+    setActiveLightbox(item);
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+  };
+
+  // Close Lightbox
+  const closeLightbox = () => {
+    setActiveLightbox(null);
+    document.body.style.overflow = "auto";
+  };
+
   const [show3DAnimation, setShow3DAnimation] = useState(true)
   const [showGallery, setShowGallery] = useState(false)
 
@@ -163,8 +280,16 @@ const Gallery = () => {
     }, 500)
   }
 
+  
+
   return (
     <section id="gallery" className="min-h-screen bg-gradient-to-br from-blue-50 to-white relative overflow-hidden">
+      <WaterEffects variant="waves" />
+      <div className="water-bubbles">
+        <div className="water-bubble"></div>
+        <div className="water-bubble"></div>
+        <div className="water-bubble"></div>
+      </div>
       {/* 3D Animation Section */}
       {show3DAnimation && (
         <div className="fixed inset-0 z-50 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center">
@@ -205,35 +330,90 @@ const Gallery = () => {
       )}
 
       {/* Gallery Content */}
-      {showGallery && (
-        <div className={`transition-opacity duration-500 ${showGallery ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="container mx-auto px-4 py-20">
-            <div className="text-center mb-12">
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-                Our Work Gallery
-              </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Explore our professional borewell services through photos and videos
-              </p>
-            </div>
+      <div className="gallery-page">
+      
+      {/* Header Section */}
+      <div className="gallery-header" data-aos="fade-down">
+        <h4>Our Portfolio</h4>
+        <h2 className='text-5xl font-bold mb-4'>Work In Action</h2>
+        <p>Explore our latest drilling projects, machinery, and successful water solutions.</p>
+      </div>
 
-            <PhotoVideoGallery
-              photos={[
-                '/images/sonalika-tractor-dealership.jpeg',
-                '/images/yellow-drilling-rig.jpeg',
-                '/images/borewell-drilling-operation.jpeg',
-                '/images/drill-rods-closeup.jpeg',
-                '/images/drill-rods-collection.jpeg',
-              ]}
-              videos={[
-                '/videos/drilling-process.mp4',
-                '/videos/drilling-process2.mp4',
-                '/videos/drilling-process3.mp4',
-              ]}
-            />
+      {/* Filter Buttons */}
+      <div className="gallery-filters" data-aos="fade-up">
+        <button 
+          className={`filter-btn ${filter === "all" ? "active" : ""}`} 
+          onClick={() => setFilter("all")}
+        >
+          All Work
+        </button>
+        <button 
+          className={`filter-btn ${filter === "photo" ? "active" : ""}`} 
+          onClick={() => setFilter("photo")}
+        >
+          Photos
+        </button>
+        <button 
+          className={`filter-btn ${filter === "video" ? "active" : ""}`} 
+          onClick={() => setFilter("video")}
+        >
+          Videos
+        </button>
+      </div>
+
+      {/* Gallery Grid */}
+      <div className="gallery-grid">
+        {filteredItems.map((item) => (
+          <div 
+            key={item.id} 
+            className="gallery-item" 
+            data-aos="zoom-in" 
+            onClick={() => openLightbox(item)}
+          >
+            <div className="media-wrapper">
+              <img 
+                src={item.type === 'video' ? item.thumbnail : item.src} 
+                alt={item.title} 
+              />
+              {/* Overlay Icon */}
+              <div className="media-overlay">
+                <div className="icon-box">
+                  {item.type === 'video' ? '▶' : '⊕'}
+                </div>
+              </div>
+              {item.type === 'video' && <div className="video-badge">VIDEO</div>}
+            </div>
+            <div className="item-info">
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox Modal */}
+      {activeLightbox && (
+        <div className="lightbox" onClick={closeLightbox}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeLightbox}>&times;</button>
+            
+            {activeLightbox.type === 'video' ? (
+              <video controls autoPlay className="lightbox-media">
+                <source src={activeLightbox.videoSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img src={activeLightbox.src} alt={activeLightbox.title} className="lightbox-media" />
+            )}
+            
+            <div className="lightbox-caption">
+              <h3>{activeLightbox.title}</h3>
+              <p>{activeLightbox.desc}</p>
+            </div>
           </div>
         </div>
       )}
+    </div>
     </section>
   )
 }
